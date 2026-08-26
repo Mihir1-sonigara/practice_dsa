@@ -193,3 +193,317 @@ Possible improvements to the project:
 ### Topic
 
 **Data Structures — Singly Linked List**
+#cir.cpp
+## 🔧 Implementation
+
+The program uses two important pointers:
+
+* `first` → points to the first node of the circular linked list
+* `last` → points to the last node of the circular linked list
+* `last->next` → always points back to `first`
+
+The node structure is:
+
+```cpp
+struct Node
+{
+    int data;
+    Node *next;
+};
+```
+
+The list is initialized using:
+
+```cpp
+Node *first = nullptr;
+Node *last = nullptr;
+```
+
+For the first node:
+
+```cpp
+first = newNode;
+last = newNode;
+last->next = first;
+```
+
+For subsequent nodes, the new node is connected after `last`, and `last` is updated.
+
+```text
+        ┌──────────────────────────────┐
+        ↓                              │
+[first] [10] → [20] → [30] → [40]      │
+                                ↑       │
+                               last ────┘
+
+last->next → first
+```
+
+This maintains the circular structure of the linked list.
+
+## 🔗 Circular Linked List Structure
+
+In a Circular Singly Linked List, the last node does not point to `nullptr`.
+
+Instead:
+
+```text
+last->next = first
+```
+
+Example:
+
+```text
+first
+  ↓
+[10] → [20] → [30] → [40]
+                    ↑
+                   last
+                    │
+                    └──────→ first
+```
+
+During traversal, the program stops when the current node becomes equal to `first` again.
+
+```cpp
+Node *current = first;
+
+do
+{
+    cout << current->data << " ";
+    current = current->next;
+} while (current != first);
+```
+
+## ➕ Insertion Operations
+
+### Insert at Beginning
+
+A new node is inserted before the current `first`.
+
+After insertion:
+
+```text
+first
+  ↓
+[5] → [10] → [20] → [30]
+                    ↑
+                   last
+                    │
+                    └────→ first
+```
+
+The `first` pointer is updated to the new node, and:
+
+```cpp
+last->next = first;
+```
+
+keeps the list circular.
+
+### Insert at End
+
+A new node is inserted after the current `last`.
+
+The new node becomes the new `last`, and:
+
+```cpp
+last->next = first;
+```
+
+is maintained.
+
+### Insert at Position
+
+The program accepts a **1-based position**, traverses to the node before that position, and inserts the new node by changing the `next` pointers.
+
+## ➖ Deletion Operations
+
+### Delete at Beginning
+
+The node pointed to by `first` is deleted.
+
+For a list containing more than one node:
+
+```cpp
+first = first->next;
+last->next = first;
+```
+
+If only one node exists, both pointers become:
+
+```cpp
+first = nullptr;
+last = nullptr;
+```
+
+### Delete at End
+
+The program traverses the circular list to find the node immediately before `last`.
+
+After deleting the old last node:
+
+```cpp
+last = previous;
+last->next = first;
+```
+
+This maintains the circular connection.
+
+### Delete at Position
+
+The program uses `previous` and `current` pointers to locate the node at the specified position.
+
+The previous node is then connected directly to the next node.
+
+## 🔄 Reverse Linked List
+
+The reverse operation changes the direction of the `next` pointers.
+
+It uses three pointers:
+
+```text
+previous
+current
+nextNode
+```
+
+After reversing, the old `first` becomes the new `last`, and the old `last` becomes the new `first`.
+
+The circular relationship is maintained:
+
+```cpp
+last->next = first;
+```
+
+## 🔍 Search Element
+
+The search operation traverses the circular linked list starting from `first`.
+
+The traversal continues until:
+
+```cpp
+current == first
+```
+
+This prevents the program from traversing the circular list indefinitely.
+
+## 🔢 Count Total Nodes
+
+The program starts traversal from `first` and counts each node until it reaches `first` again.
+
+```text
+first → Node → Node → Node → last
+  ↑                         │
+  └─────────────────────────┘
+```
+
+## 📈 Find Maximum Element
+
+The first node's value is initially considered the maximum.
+
+The remaining nodes are traversed from `first` until the traversal reaches `first` again.
+
+## 📉 Find Minimum Element
+
+The first node's value is initially considered the minimum.
+
+The program then compares the remaining node values to find the minimum.
+
+## 📊 Calculate Average
+
+The program calculates:
+
+```text
+Sum = sum of all node values
+Count = total number of nodes
+
+Average = Sum / Count
+```
+
+Traversal starts from `first` and stops when the current node becomes `first` again.
+
+## 🔃 Sorting
+
+The circular linked list is sorted in ascending order by comparing the `data` values of nodes.
+
+The node connections are not changed. Instead, the `data` values are swapped.
+
+```cpp
+int temp = i->data;
+i->data = j->data;
+j->data = temp;
+```
+
+## 🗑️ Clear Entire List
+
+The `clearList()` function deletes all dynamically allocated nodes.
+
+After clearing the list:
+
+```cpp
+first = nullptr;
+last = nullptr;
+```
+
+The list is then empty.
+
+## 🔁 Find Duplicate Elements
+
+The program compares the values of different nodes to find duplicate elements.
+
+If a duplicate is found, its value is displayed.
+
+## 🔢 Count Duplicate Elements
+
+The program counts duplicate values by comparing each node with the remaining nodes in the circular linked list.
+
+## ✅ Check if List is Empty
+
+The list is considered empty when:
+
+```cpp
+first == nullptr
+```
+
+Otherwise, the list contains at least one node.
+
+## 📁 Project Structure
+
+```text
+Circular-Singly-Linked-List/
+│
+├── cir.cpp
+└── README.md
+```
+
+## 🎓 Purpose
+
+This project is created for practicing **Data Structures and Algorithms in C++**, specifically the implementation and manipulation of a **Circular Singly Linked List**.
+
+It is suitable for beginners learning:
+
+* Pointers
+* Dynamic memory allocation
+* Structures
+* Circular linked lists
+* `first` and `last` pointer management
+* Traversal
+* Insertion
+* Deletion
+* Searching
+* Sorting
+* Reversing
+* Memory management
+
+## 👨‍💻 Author
+
+**Mihir Sonigara**
+
+## Language
+
+**C++**
+
+## Topic
+
+**Data Structures & Algorithms — Circular Singly Linked List**
